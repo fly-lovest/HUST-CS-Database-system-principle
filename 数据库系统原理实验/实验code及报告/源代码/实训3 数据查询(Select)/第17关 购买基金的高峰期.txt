@@ -1,0 +1,916 @@
+-- 17 查询2022年2月购买基金的高峰期。至少连续三个交易日，所有投资者购买基金的总金额超过100万(含)，则称这段连续交易日为投资者购买基金的高峰期。只有交易日才能购买基金,但不能保证每个交易日都有投资者购买基金。2022年春节假期之后的第1个交易日为2月7日,周六和周日是非交易日，其余均为交易日。请列出高峰时段的日期和当日基金的总购买金额，按日期顺序排序。总购买金额命名为total_amount。
+--    请用一条SQL语句实现该查询：
+
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-07' or purchase_time = '2022-02-08' or purchase_time = '2022-02-09') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-07' or purchase_time = '2022-02-08' or purchase_time = '2022-02-09'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-07')
+	and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-08')
+	and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-09')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-08' or purchase_time = '2022-02-09' or purchase_time = '2022-02-10') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-08' or purchase_time = '2022-02-09' or purchase_time = '2022-02-10'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-08') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-09')
+	and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-10')
+union 
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-09' or purchase_time = '2022-02-10' or purchase_time = '2022-02-11') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-09' or purchase_time = '2022-02-10' or purchase_time = '2022-02-11'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-09') and 
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-10') and 
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-11')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-10' or purchase_time = '2022-02-11' or purchase_time = '2022-02-14') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-10' or purchase_time = '2022-02-11' or purchase_time = '2022-02-14'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-10') and 
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-11') and 
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-14')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-11' or purchase_time = '2022-02-14' or purchase_time = '2022-02-15') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-11' or purchase_time = '2022-02-14' or purchase_time = '2022-02-15'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-11') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-14') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-15')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-14' or purchase_time = '2022-02-15' or purchase_time = '2022-02-16') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-14' or purchase_time = '2022-02-15' or purchase_time = '2022-02-16'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-14') and 
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-15') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-16')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-15' or purchase_time = '2022-02-16' or purchase_time = '2022-02-17') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-15' or purchase_time = '2022-02-16' or purchase_time = '2022-02-17'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-15') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-16') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-17')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-16' or purchase_time = '2022-02-17' or purchase_time = '2022-02-18') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-16' or purchase_time = '2022-02-17' or purchase_time = '2022-02-18'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-16') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-17') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-18')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-17' or purchase_time = '2022-02-18' or purchase_time = '2022-02-21') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-17' or purchase_time = '2022-02-18' or purchase_time = '2022-02-21'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-17') and 
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-18') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-21')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-18' or purchase_time = '2022-02-21' or purchase_time = '2022-02-22') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-18' or purchase_time = '2022-02-21' or purchase_time = '2022-02-22'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-18') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-21') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-22')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-21' or purchase_time = '2022-02-22' or purchase_time = '2022-02-23') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-21' or purchase_time = '2022-02-22' or purchase_time = '2022-02-23'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-21') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-22') and 
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-23')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-22' or purchase_time = '2022-02-23' or purchase_time = '2022-02-24') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-22' or purchase_time = '2022-02-23' or purchase_time = '2022-02-24'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-22') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-23') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-24')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-23' or purchase_time = '2022-02-24' or purchase_time = '2022-02-25') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-23' or purchase_time = '2022-02-24' or purchase_time = '2022-02-25'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-23') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-24') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-25')
+union
+select purchase_time as pro_purchase_time,total_amount
+from (
+	select pro_purchase_time,sum(amount) as total_amount
+	from (
+		select pro_purchase_time,pro_quantity*f_amount as amount
+		from property,fund
+		where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+		and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+		and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+	) as A(pro_purchase_time,amount)
+	group by pro_purchase_time
+	order by pro_purchase_time
+) as B(purchase_time,total_amount)
+where (purchase_time = '2022-02-24' or purchase_time = '2022-02-25' or purchase_time = '2022-02-28') and 1000000 <= ALL(
+	select total_amount
+	from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount)
+	where purchase_time = '2022-02-24' or purchase_time = '2022-02-25' or purchase_time = '2022-02-28'
+) and exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-24') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-25') and
+	exists (select * from (
+		select pro_purchase_time,sum(amount) as total_amount
+		from (
+			select pro_purchase_time,pro_quantity*f_amount as amount
+			from property,fund
+			where pro_type = 3 and pro_pif_id = f_id and pro_purchase_time >= '2022-02-07' and pro_purchase_time <='2022-02-28'
+			and pro_purchase_time <> '2022-02-12' and pro_purchase_time <> '2022-02-13' and pro_purchase_time <> '2022-02-19'
+			and pro_purchase_time <> '2022-02-20' and pro_purchase_time <> '2022-02-26' and pro_purchase_time <> '2022-02-27'
+		) as C(pro_purchase_time,amount)
+		group by pro_purchase_time
+		order by pro_purchase_time
+	) as D(purchase_time,total_amount) where purchase_time = '2022-02-28');
+
+
+
+/*  end  of  your code  */
